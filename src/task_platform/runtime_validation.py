@@ -17,14 +17,7 @@ def is_task_source(obj: object) -> TypeGuard[TaskSourceProtocol]:
 def validate_task_dict(task: dict[str, Any]) -> Task:
     """Проверить обязательные поля задачи и вернуть нормализованную задачу."""
 
-    if "id" not in task:
-        raise ValueError("Задача должна содержать поле 'id'")
-    if "payload" not in task:
-        raise ValueError("Задача должна содержать поле 'payload'")
-    if not isinstance(task["id"], str) or not task["id"]:
-        raise ValueError("Поле 'id' задачи должно быть непустой строкой")
-
-    return {"id": task["id"], "payload": task["payload"]}
+    return Task.from_dict(task)
 
 
 def ensure_task_list(tasks: list[dict[str, Any]]) -> list[Task]:

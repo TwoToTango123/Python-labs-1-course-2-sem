@@ -6,15 +6,18 @@ from task_platform.sources.api_stub_source import ApiStubTaskSource
 
 
 def test_api_stub_source_returns_valid_tasks() -> None:
-    source = ApiStubTaskSource(lambda: [{"id": "api-1", "payload": {"status": "ok"}}])
+    source = ApiStubTaskSource(
+        lambda: [{"id": "api-1", "description": "API task", "priority": 1}]
+    )
 
     tasks = source.get_tasks()
 
-    assert tasks == [{"id": "api-1", "payload": {"status": "ok"}}]
+    assert tasks[0].id == "api-1"
+    assert tasks[0].description == "API task"
 
 
 def test_api_stub_source_rejects_invalid_tasks() -> None:
-    source = ApiStubTaskSource(lambda: [{"id": "api-1"}])
+    source = ApiStubTaskSource(lambda: [{"id": "api-1", "priority": 1}])
 
     with pytest.raises(ValueError):
         source.get_tasks()

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 
-from .contracts import TaskSourceProtocol
 from .runtime_validation import is_task_source
 from .task_types import Task
 

@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Callable
+from collections.abc import Callable
+from datetime import datetime, timedelta, timezone
 
-from ..task_types import Task
+from ..task_types import Task, TaskStatus
 
 
 class GeneratorTaskSource:
@@ -13,23 +14,33 @@ class GeneratorTaskSource:
     def __init__(
         self,
         count: int,
-        payload_factory: Callable[[int], object] | None = None,
+        description_factory: Callable[[int], str] | None = None,
+        priority_factory: Callable[[int], int] | None = None,
+        status_factory: Callable[[int], TaskStatus] | None = None,
         id_prefix: str = "generated",
     ) -> None:
         if count < 0:
             raise ValueError("count должен быть неотрицательным")
 
         self._count = count
-        self._payload_factory = payload_factory or (lambda i: {"index": i})
+        self._description_factory = description_factory or (
+            lambda i: f"Сгенерированная задача #{i + 1}"
+        )
+        self._priority_factory = priority_factory or (lambda i: (i % 10) + 1)
+        self._status_factory = status_factory or (lambda i: TaskStatus.READY)
         self._id_prefix = id_prefix
 
     def get_tasks(self) -> list[Task]:
         tasks: list[Task] = []
+        base_created_at = datetime.now(timezone.utc)
         for i in range(self._count):
             tasks.append(
-                {
-                    "id": f"{self._id_prefix}-{i + 1}",
-                    "payload": self._payload_factory(i),
-                }
+                Task(
+                    id=f"{self._id_prefix}-{i + 1}",
+                    description=self._description_factory(i),
+                    priority=self._priority_factory(i),
+                    status=self._status_factory(i),
+                    created_at=base_created_at + timedelta(seconds=i),
+                )
             )
         return tasks
