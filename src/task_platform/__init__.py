@@ -1,4 +1,4 @@
-"""Пакет платформы обработки задач. Лабораторная работа №2."""
+"""Пакет платформы обработки задач. Лабораторная работа №3."""
 
 from .contracts import TaskSourceProtocol
 from .intake import collect_tasks, collect_tasks_from_source
@@ -13,6 +13,7 @@ from .exceptions import (
     TaskValidationError,
 )
 from .task_types import Task, TaskDescription, TaskId, TaskStatus
+from .task_queue import TaskQueue
 
 __all__ = [
     "Task",
@@ -30,4 +31,5 @@ __all__ = [
     "TaskSourceProtocol",
     "collect_tasks",
     "collect_tasks_from_source",
+    "TaskQueue",
 ]
