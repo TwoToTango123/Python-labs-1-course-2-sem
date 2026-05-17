@@ -1,4 +1,4 @@
-"""Поведенческие контракты для источников задач."""
+"""Поведенческие контракты для источников задач и async-обработчиков."""
 
 from __future__ import annotations
 
@@ -13,3 +13,11 @@ class TaskSourceProtocol(Protocol):
 
     def get_tasks(self) -> list[Task]:
         """Вернуть список задач из источника."""
+
+
+@runtime_checkable
+class AsyncTaskHandlerProtocol(Protocol):
+    """Контракт асинхронного обработчика задач."""
+
+    async def handle(self, task: Task) -> str:
+        """Асинхронно обработать задачу и вернуть краткий результат."""

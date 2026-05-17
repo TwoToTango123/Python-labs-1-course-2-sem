@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "task-platform-lab1"
 version = "0.1.0"
-description = "Lab 1: task sources and contracts"
+description = "Task platform labs: async task executor with extensible handlers"
 requires-python = ">=3.11"
 
 [tool.pytest.ini_options]

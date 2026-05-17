@@ -1,6 +1,8 @@
-"""Пакет платформы обработки задач. Лабораторная работа №3."""
+"""Пакет платформы обработки задач. Лабораторные работы по архитектуре Python."""
 
-from .contracts import TaskSourceProtocol
+from .async_execution import AsyncTaskExecutor, TaskExecutionResult, TaskExecutionStats
+from .contracts import AsyncTaskHandlerProtocol, TaskSourceProtocol
+from .handlers import BaseAsyncTaskHandler, FailingTaskHandler, SleepTaskHandler
 from .intake import collect_tasks, collect_tasks_from_source
 from .exceptions import (
     InvalidTaskCreatedAtError,
@@ -8,7 +10,11 @@ from .exceptions import (
     InvalidTaskIdError,
     InvalidTaskPriorityError,
     InvalidTaskStatusError,
+    TaskAlreadyCompletedError,
     TaskError,
+    TaskExecutionError,
+    TaskExecutorNotRunningError,
+    TaskHandlerNotFoundError,
     TaskStateTransitionError,
     TaskValidationError,
 )
@@ -29,7 +35,18 @@ __all__ = [
     "InvalidTaskStatusError",
     "InvalidTaskCreatedAtError",
     "TaskSourceProtocol",
+    "AsyncTaskHandlerProtocol",
     "collect_tasks",
     "collect_tasks_from_source",
     "TaskQueue",
+    "TaskExecutionError",
+    "TaskHandlerNotFoundError",
+    "TaskAlreadyCompletedError",
+    "TaskExecutorNotRunningError",
+    "AsyncTaskExecutor",
+    "TaskExecutionResult",
+    "TaskExecutionStats",
+    "BaseAsyncTaskHandler",
+    "SleepTaskHandler",
+    "FailingTaskHandler",
 ]

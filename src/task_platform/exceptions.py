@@ -38,3 +38,19 @@ class InvalidTaskStatusError(TaskValidationError):
 class InvalidTaskCreatedAtError(TaskValidationError):
     def __init__(self, message: str = "Некорректное значение created_at") -> None:
         super().__init__(message)
+
+
+class TaskExecutionError(TaskError):
+    """Базовая ошибка выполнения задачи в асинхронном исполнителе."""
+
+
+class TaskHandlerNotFoundError(TaskExecutionError):
+    """Не найден обработчик, способный обработать задачу."""
+
+
+class TaskAlreadyCompletedError(TaskExecutionError):
+    """Попытка повторно обработать уже завершенную задачу."""
+
+
+class TaskExecutorNotRunningError(TaskExecutionError):
+    """Операция требует запущенного async-исполнителя."""
